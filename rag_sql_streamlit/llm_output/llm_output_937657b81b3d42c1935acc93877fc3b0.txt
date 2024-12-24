@@ -1,0 +1,33 @@
+Here are the four outputs:
+
+1) -- Final Query
+```sql
+SELECT a.title, c.name
+FROM payment p
+JOIN rental r ON p.rental_id = r.rental_id
+JOIN film_text ft ON ft.film_id = p.film_id
+JOIN category c ON ft.category_id = c.category_id
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Quelle est la liste des films disponibles avec leur catégorie ?', 'List of available films with their categories', 
+        'SELECT a.title, c.name FROM payment p JOIN rental r ON p.rental_id = r.rental_id JOIN film_text ft ON ft.film_id = p.film_id JOIN category c ON ft.category_id = c.category_id', NOW())
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW available_films AS 
+SELECT a.title, c.name
+FROM payment p
+JOIN rental r ON p.rental_id = r.rental_id
+JOIN film_text ft ON ft.film_id = p.film_id
+JOIN category c ON ft.category_id = c.category_id
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_name, query_id, created_at)
+VALUES ('available_films', (SELECT MAX(query_id) FROM queries_log), NOW())
+```

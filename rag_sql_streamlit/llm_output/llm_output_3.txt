@@ -1,0 +1,22 @@
+Here are the outputs:
+
+```
+-- Final Query
+SELECT f.title, ft.category_name
+FROM film f
+JOIN film_type ft ON f.film_type_id = ft.id;
+```
+
+```
+-- Insert into queries_log
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Quelle est la liste des films disponibles avec leur catégorie ?', 'This query retrieves a list of available films with their corresponding category.', 'SELECT f.title, ft.category_name FROM film f JOIN film_type ft ON f.film_type_id = ft.id;', NOW());
+```
+
+```
+-- Create or replace view
+CREATE OR REPLACE VIEW available_films AS
+SELECT f.title, ft.category_name
+FROM film f
+JOIN film_type ft ON f.film_type_id = ft.id;
+```

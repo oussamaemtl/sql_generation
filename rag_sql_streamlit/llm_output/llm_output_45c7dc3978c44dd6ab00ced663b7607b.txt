@@ -1,0 +1,27 @@
+Here are the four code blocks:
+
+1) -- Final Query
+```sql
+SELECT UPPER(CONCAT(staff.first_name, ' ', staff.last_name)) AS "Actor Name"
+FROM staff;
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Create a list of all the actorsâ€™ first name and last name. Display the first and last name of each actor in a single column in upper case letters. Name the column Actor Name.', 'Retrieves the names of all actors, formatting them as "Actor Name".', 
+'SELECT UPPER(CONCAT(staff.first_name, '' , staff.last_name)) AS ''Actor Name'' FROM staff;', NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW Actor_View AS
+SELECT UPPER(CONCAT(staff.first_name, ' ', staff.last_name)) AS "Actor Name"
+FROM staff;
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES ((SELECT MAX(view_id) + 1 FROM generated_views), 1, 'Actor_View', NOW());
+```

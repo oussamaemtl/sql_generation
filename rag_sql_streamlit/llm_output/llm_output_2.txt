@@ -1,0 +1,20 @@
+Here are the outputs in four separate code blocks, labeled as requested:
+
+1) -- Final Query
+SELECT f.title, ft.category 
+FROM film f 
+JOIN film_type ft ON f.film_id = ft.film_id;
+
+2) -- Insert into queries_log
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Quelle est la liste des films disponibles avec leur catégorie ?', 'List of available movies with their category.', 'SELECT f.title, ft.category FROM film f JOIN film_type ft ON f.film_id = ft.film_id;', NOW());
+
+3) -- Create or replace view
+CREATE OR REPLACE VIEW available_movies AS 
+SELECT f.title, ft.category 
+FROM film f 
+JOIN film_type ft ON f.film_id = ft.film_id;
+
+4) -- Insert into generated_views
+INSERT INTO generated_views (view_name, query_id, created_at)
+VALUES ('available_movies', (SELECT query_id FROM queries_log ORDER BY query_id DESC LIMIT 1), NOW());

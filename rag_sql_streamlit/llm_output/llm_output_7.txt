@@ -1,0 +1,30 @@
+Here are the outputs:
+
+1) -- Final Query
+```sql
+SELECT COUNT(*) 
+FROM film 
+WHERE film.title IS NOT NULL;
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('How many movies are they ?', 'Number of movies', 'SELECT COUNT(*) FROM film WHERE film.title IS NOT NULL;', NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW movie_count AS 
+SELECT COUNT(*) 
+FROM film 
+WHERE film.title IS NOT NULL;
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES (DEFAULT, LAST_INSERT_ID(), 'movie_count', NOW());
+```
+
+Please note that I've assumed the question is referring to the "film" table in the schema context.

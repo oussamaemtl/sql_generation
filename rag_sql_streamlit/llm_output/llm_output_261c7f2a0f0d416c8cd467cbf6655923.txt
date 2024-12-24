@@ -1,0 +1,35 @@
+Here are the four outputs:
+
+1) -- Final Query
+```sql
+SELECT p.title, c.name 
+FROM payment_p2007_01 p 
+JOIN store s ON p.store_id = s.store_id 
+JOIN film_category fc ON s.film_id = fc.film_id 
+JOIN category c ON fc.category_id = c.category_id;
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Quelle est la liste des films disponibles avec leur catégorie ?', 'Retrieve a list of available films with their categories', 
+         'SELECT p.title, c.name FROM payment_p2007_01 p JOIN store s ON p.store_id = s.store_id JOIN film_category fc ON s.film_id = fc.film_id JOIN category c ON fc.category_id = c.category_id;', NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW available_films AS 
+SELECT p.title, c.name 
+FROM payment_p2007_01 p 
+JOIN store s ON p.store_id = s.store_id 
+JOIN film_category fc ON s.film_id = fc.film_id 
+JOIN category c ON fc.category_id = c.category_id;
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES ((SELECT COALESCE(MAX(view_id), 0) + 1 FROM generated_views), 
+        (SELECT query_id FROM queries_log WHERE question = 'Quelle est la liste des films disponibles avec leur catégorie ?',), 
+        'available_films', NOW());
+```

@@ -1,0 +1,41 @@
+Here are the outputs in the required format:
+
+```
+1) -- Final Query
+```sql
+SELECT f.title, c.name
+FROM film_category fc
+JOIN films f ON fc.film_id = f.film_id
+JOIN categories c ON fc.category_id = c.category_id;
+```
+
+```
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Quelle est la liste des films disponibles avec leur catégorie ?', 'List of available films with their category', 
+        'SELECT f.title, c.name
+         FROM film_category fc
+         JOIN films f ON fc.film_id = f.film_id
+         JOIN categories c ON fc.category_id = c.category_id;', NOW());
+```
+
+```
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW available_films AS
+SELECT f.title, c.name
+FROM film_category fc
+JOIN films f ON fc.film_id = f.film_id
+JOIN categories c ON fc.category_id = c.category_id;
+```
+
+```
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES ((SELECT COALESCE(MAX(view_id), 0) FROM generated_views) + 1, 
+        (SELECT MAX(query_id) FROM queries_log), 'available_films', NOW());
+```
+
+Let me know if you need any further assistance!

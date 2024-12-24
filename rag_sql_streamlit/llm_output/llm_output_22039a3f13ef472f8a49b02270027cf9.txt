@@ -1,0 +1,31 @@
+1) -- Final Query
+```sql
+SELECT film.title, category.name
+FROM film
+JOIN inventory ON film.film_id = inventory.film_id
+JOIN rental ON inventory.inventory_id = rental.inventory_id
+JOIN category ON film.category_id = category.category_id;
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Quelle est la liste des films disponibles avec leur catégorie ?', 'Retrieve a list of available films with their categories', 
+'SELECT film.title, category.name FROM film JOIN inventory ON film.film_id = inventory.film_id JOIN rental ON inventory.inventory_id = rental.inventory_id JOIN category ON film.category_id = category.category_id;', NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW available_films AS
+SELECT film.title, category.name
+FROM film
+JOIN inventory ON film.film_id = inventory.film_id
+JOIN rental ON inventory.inventory_id = rental.inventory_id
+JOIN category ON film.category_id = category.category_id;
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_name, created_at)
+VALUES ('available_films', NOW());
+```

@@ -1,0 +1,29 @@
+Here are the four output code blocks:
+
+1) -- Final Query
+```sql
+SELECT COUNT(*) AS num_movies, category.name
+FROM movie_category JOIN category ON movie_category.category_id = category.category_id
+GROUP BY category.name;
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('How many movies per categories are there ?', 'Number of movies by category', 
+         'SELECT COUNT(*) AS num_movies, category.name FROM movie_category JOIN category ON movie_category.category_id = category.category_id GROUP BY category.name;', NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW category_movies AS
+SELECT COUNT(*) AS num_movies, category.name
+FROM movie_category JOIN category ON movie_category.category_id = category.category_id
+GROUP BY category.name;
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_name, query_id, created_at)
+VALUES ('category_movies', DEFAULT, NOW());
+```

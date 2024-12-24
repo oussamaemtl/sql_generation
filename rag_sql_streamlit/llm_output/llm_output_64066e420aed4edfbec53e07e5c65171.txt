@@ -1,0 +1,26 @@
+1) -- Final Query
+```sql
+SELECT COUNT(*) 
+FROM film;
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('How many films are there ?', 'Counts the number of films in the database.', 'SELECT COUNT(*) FROM film;', NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW total_film_count AS 
+SELECT COUNT(*) 
+FROM film;
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES (DEFAULT, 1, 'total_film_count', NOW());
+```
+
+Note: I assumed that the user question "How many films are there?" is equivalent to counting the number of films in the database.

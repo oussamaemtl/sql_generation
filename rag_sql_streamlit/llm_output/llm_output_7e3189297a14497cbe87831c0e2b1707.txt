@@ -1,0 +1,29 @@
+Here are the outputs for the four code blocks:
+
+1) -- Final Query
+```sql
+SELECT UPPER(CONCAT(staff.first_name, ' ', staff.last_name)) AS "Actor Name"
+FROM staff;
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Create a list of all the actors’ first name and last name. Display the first and last name of each actor in a single column in upper case letters. Name the column Actor Name.', 'Retrieves the names of all actors, formatting them as "Actor Name".', 
+'SELECT UPPER(CONCAT(staff.first_name, '' , staff.last_name)) AS ''Actor Name'' FROM staff;', NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW Actor_View AS
+SELECT UPPER(CONCAT(staff.first_name, ' ', staff.last_name)) AS "Actor Name"
+FROM staff;
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES ((SELECT COALESCE(MAX(view_id), 0) + 1 FROM generated_views), (SELECT query_id FROM queries_log ORDER BY created_at DESC LIMIT 1), 'Actor_View', NOW());
+```
+
+Please note that the above code blocks are based on the schema context provided and follow the requirements.

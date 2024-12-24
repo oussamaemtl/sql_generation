@@ -1,0 +1,28 @@
+```
+1) -- Final Query
+```sql
+SELECT COUNT(*)
+FROM film
+WHERE film.genre = 'Horror';
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (query_id, question, description, sql_text, created_at)
+VALUES (DEFAULT, 'How many horror movies are there?', 'Count of Horror Movies', 
+SELECT COUNT(*) FROM film WHERE film.genre = 'Horror', NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW Horror_Movies AS
+SELECT COUNT(*)
+FROM film
+WHERE film.genre = 'Horror';
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES (DEFAULT, LAST_INSERT_ID(), 'Horror_Movies', NOW());
+```

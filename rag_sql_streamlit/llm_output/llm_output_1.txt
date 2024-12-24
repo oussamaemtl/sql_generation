@@ -1,0 +1,36 @@
+Here are the outputs:
+
+1) -- Final Query
+
+sql
+SELECT f.title, c.name 
+FROM film f
+JOIN category c ON f.category_id = c.category_id;
+
+
+
+2) -- Insert into queries_log
+
+sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Quelle est la liste des films disponibles avec leur catégorie ?', 'Lists the available movies with their categories', 
+         'SELECT f.title, c.name FROM film f JOIN category c ON f.category_id = c.category_id;', NOW());
+
+
+
+3) -- Create or replace view
+
+sql
+CREATE OR REPLACE VIEW available_movies_with_categories AS 
+SELECT f.title, c.name 
+FROM film f
+JOIN category c ON f.category_id = c.category_id;
+
+
+
+4) -- Insert into generated_views
+
+sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES ((SELECT COALESCE(MAX(view_id), 0) + 1 FROM generated_views), 
+        (SELECT query_id FROM queries_log ORDER BY query_id DESC LIMIT 1), 'available_movies_with_categories', NOW());
