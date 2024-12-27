@@ -106,23 +106,23 @@ def main():
                     password=pwd_db,
                 )
 
-                execute_sql_file(
-                    filepath=log_file_path,
-                    host="localhost",
-                    port=5432,
-                    dbname="pagila",
-                    user="postgres",
-                    password=pwd_db,
-                )
+                # execute_sql_file(
+                #     filepath=log_file_path,
+                #     host="localhost",
+                #     port=5432,
+                #     dbname="pagila",
+                #     user="postgres",
+                #     password=pwd_db,
+                # )
 
-                execute_sql_file(
-                    filepath=log_view_file_path,
-                    host="localhost",
-                    port=5432,
-                    dbname="pagila",
-                    user="postgres",
-                    password=pwd_db,
-                )
+                # execute_sql_file(
+                #     filepath=log_view_file_path,
+                #     host="localhost",
+                #     port=5432,
+                #     dbname="pagila",
+                #     user="postgres",
+                #     password=pwd_db,
+                # )
 
                 st.success("SQL executed successfully!")
             except Exception as e:

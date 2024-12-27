@@ -1,0 +1,32 @@
+1) -- Final Query
+```sql
+SELECT a.actor_id, a.first_name, a.last_name 
+FROM actor a 
+WHERE a.first_name = 'Joe';
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Find the id, first name, and last name of an actor from table actor, of whom you know only the first name of "Joe."', 
+         'Retrieves the information of the actor with the first name "Joe".', 
+         'SELECT a.actor_id, a.first_name, a.last_name FROM actor a WHERE a.first_name = ''Joe''', 
+         NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW joe_actor AS 
+SELECT a.actor_id, a.first_name, a.last_name 
+FROM actor a 
+WHERE a.first_name = 'Joe';
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES ((SELECT COALESCE(MAX(view_id), 0) + 1 FROM generated_views), 
+         (SELECT MAX(query_id) FROM queries_log), 
+         'joe_actor', 
+         NOW());
+```

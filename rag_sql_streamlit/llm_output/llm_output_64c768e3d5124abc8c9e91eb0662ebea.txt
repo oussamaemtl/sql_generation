@@ -1,0 +1,31 @@
+Here are the four code blocks:
+
+1) -- Final Query
+```sql
+SELECT f.title, a.first_name, a.last_name 
+FROM film f 
+JOIN actor a ON f.actor_id = a.actor_id 
+WHERE a.first_name = 'Joe';
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Montre moi tous les films qui ont un acteur qui s''appelle "JOE"', 'Retrieves the information of films with an actor named "Joe".', 
+'SELECT f.title, a.first_name, a.last_name FROM film f JOIN actor a ON f.actor_id = a.actor_id WHERE a.first_name = ''Joe'', NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW joe_films AS
+SELECT f.title, a.first_name, a.last_name 
+FROM film f 
+JOIN actor a ON f.actor_id = a.actor_id 
+WHERE a.first_name = 'Joe';
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES (DEFAULT, 8, 'joe_films', NOW());
+```

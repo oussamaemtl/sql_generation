@@ -1,0 +1,26 @@
+1) -- Final Query
+```sql
+SELECT *
+FROM actor
+WHERE UPPER(last_name) LIKE '%GEN%';
+```
+
+2) -- Insert into queries_log
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES ('Find all actors whose last name contain the letters GEN. Make this case insensitive.', 'Retrieves all actors whose last name contains the letters GEN, ignoring case.', 'SELECT * FROM actor WHERE UPPER(last_name) LIKE ''%GEN%'', ', NOW());
+```
+
+3) -- Create or replace view
+```sql
+CREATE OR REPLACE VIEW find_gen_actors AS
+SELECT *
+FROM actor
+WHERE UPPER(last_name) LIKE '%GEN%';
+```
+
+4) -- Insert into generated_views
+```sql
+INSERT INTO generated_views (view_name)
+VALUES ('find_gen_actors');
+```

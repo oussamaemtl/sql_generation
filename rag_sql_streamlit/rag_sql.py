@@ -2,7 +2,7 @@ import os
 import os
 import uuid
 import sys
-from protected import open_ai_key
+from protected import open_ai_key, grocq_api_key
 from langchain_openai import ChatOpenAI
 
 # Define the base directory
@@ -10,6 +10,7 @@ from langchain_openai import ChatOpenAI
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, BASE_DIR)
 os.environ["OPENAI_API_KEY"] = open_ai_key
+os.environ["GROQ_API_KEY"] = grocq_api_key
 
 from utils.db_interaction import execute_sql_file
 import json
@@ -22,6 +23,7 @@ from langchain.docstore.document import Document
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_ollama import OllamaLLM
+from groq import Groq
 
 
 def clean_sql_dump(sql_dump: str) -> str:
@@ -355,9 +357,25 @@ def run_prompt_template(question, llm_openai=False):
     )
     if llm_openai:
         llm = ChatOpenAI(model="gpt-3.5-turbo-0125", temperature=0)
+        response = llm(final_prompt)
     else:
-        llm = OllamaLLM(model="llama3")
-    response = llm(final_prompt)
+        # llm = OllamaLLM(model="llama3")
+        # response = llm(final_prompt)
+        client = Groq(
+            api_key=os.environ.get("GROQ_API_KEY"),
+        )
+
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": final_prompt,
+                }
+            ],
+            model="llama3-8b-8192",
+        )
+
+        response = chat_completion.choices[0].message.content
     return response
 
 
@@ -481,10 +499,10 @@ if __name__ == "__main__":
     # )
 
     question = "Create a list of all the actors’ first name and last name. Display the first and last name of each actor in a single column in upper case letters. Name the column Actor Name."
-    # boo, unique_id = generate_sql(question, llm_openai=False)
+    boo, unique_id = generate_sql(question, llm_openai=False)
 
-    unique_id = "45c7dc3978c44dd6ab00ced663b7607b"
-    boo = True
+    # unique_id = "45c7dc3978c44dd6ab00ced663b7607b"
+    # boo = True
 
     view_file_path = os.path.join(
         BASE_DIR,
@@ -516,20 +534,20 @@ if __name__ == "__main__":
         password=pwd_db,
     )
 
-    execute_sql_file(
-        filepath=log_file_path,
-        host="localhost",
-        port=5432,
-        dbname="pagila",
-        user="postgres",
-        password=pwd_db,
-    )
+    # execute_sql_file(
+    #     filepath=log_file_path,
+    #     host="localhost",
+    #     port=5432,
+    #     dbname="pagila",
+    #     user="postgres",
+    #     password=pwd_db,
+    # )
 
-    execute_sql_file(
-        filepath=log_view_file_path,
-        host="localhost",
-        port=5432,
-        dbname="pagila",
-        user="postgres",
-        password=pwd_db,
-    )
+    # execute_sql_file(
+    #     filepath=log_view_file_path,
+    #     host="localhost",
+    #     port=5432,
+    #     dbname="pagila",
+    #     user="postgres",
+    #     password=pwd_db,
+    # )
