@@ -1,0 +1,3 @@
+CREATE OR REPLACE VIEW film_count AS
+SELECT COUNT(*) 
+FROM film;

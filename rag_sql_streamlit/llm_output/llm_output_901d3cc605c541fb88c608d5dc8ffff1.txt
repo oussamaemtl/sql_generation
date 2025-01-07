@@ -1,0 +1,29 @@
+Here are the four code blocks:
+
+**1) -- Final Query**
+```sql
+SELECT COUNT(*) 
+FROM film;
+```
+
+**2) -- Insert into queries_log**
+```sql
+INSERT INTO queries_log (question, description, sql_text, created_at)
+VALUES 
+('Give me the total number of films', 'Retrieves the total number of films.', 
+'SELECT COUNT(*) FROM film;', NOW());
+```
+
+**3) -- Create or replace view**
+```sql
+CREATE OR REPLACE VIEW film_count AS
+SELECT COUNT(*) 
+FROM film;
+```
+
+**4) -- Insert into generated_views**
+```sql
+INSERT INTO generated_views (view_id, query_id, view_name, created_at)
+VALUES 
+(NULL, (SELECT MAX(query_id) FROM queries_log) + 1, 'film_count', NOW());
+```
